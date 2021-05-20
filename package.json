@@ -21,6 +21,7 @@
     "ts-node": "3.3.0"
   },
   "scripts": {
+    "build": "tsc",
     "start:dev": "nodemon",
     "start": "ts-node src/index.ts",
     "makemigrations": "ts-node ./node_modules/typeorm/cli.js migration:generate -n Test",
