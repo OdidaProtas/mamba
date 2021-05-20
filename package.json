@@ -1,0 +1,29 @@
+{
+  "name": "portfolio-e",
+  "version": "0.0.1",
+  "description": "Awesome project developed with TypeORM.",
+  "devDependencies": {
+    "ts-node": "3.3.0",
+    "@types/node": "^8.0.29",
+    "typescript": "3.3.3333",
+    "@types/cors": "^2.8.10"
+  },
+  "dependencies": {
+    "@typescript-eslint/parser": "^4.24.0",
+    "axios": "^0.21.1",
+    "body-parser": "^1.18.1",
+    "cors": "^2.8.5",
+    "express": "^4.15.4",
+    "nodemon": "^2.0.7",
+    "pg": "^8.4.0",
+    "prettyjson": "^1.2.1",
+    "reflect-metadata": "^0.1.10",
+    "typeorm": "0.2.32"
+  },
+  "scripts": {
+    "start:dev": "nodemon",
+    "start": "ts-node src/index.ts",
+    "makemigrations": "ts-node ./node_modules/typeorm/cli.js migration:generate -n Test",
+    "migrate": "ts-node ./node_modules/typeorm/cli.js migration:run"
+  }
+}
