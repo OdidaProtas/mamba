@@ -1,7 +1,7 @@
 {
   "name": "portfolio-e",
   "version": "0.0.1",
-  "description": "Awesome project developed with TypeORM.",
+  "description": "",
   "devDependencies": {
     "@types/cors": "^2.8.10",
     "@types/node": "^8.0.29",
@@ -22,7 +22,8 @@
   },
   "scripts": {
     "start:dev": "nodemon",
-    "start": "ts-node src/index.ts",
+    "postinstall": "tsc",
+    "start": "node dist/index.js",
     "makemigrations": "ts-node ./node_modules/typeorm/cli.js migration:generate -n Test",
     "migrate": "ts-node ./node_modules/typeorm/cli.js migration:run"
   },
