@@ -6,7 +6,7 @@ import * as prettyjson from "prettyjson";
 import axios from "axios";
 
 const mpesaAuthUrl = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
-
+const darajaSandBoxUrl = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
 
 export class GeneralController {
     async one(request: Request, response: Response, next: NextFunction) {
@@ -25,49 +25,69 @@ export class PaymentController {
             "ResponseCode": "00000000",
             "ResponseDesc": "success"
         }
+
+        console.log(prettyjson.render(request.body, options));
+
         response.json(message)
     }
 
     async stkPush(request, response) {
 
         let auth = `Bearer ${request.token}`;
-        let timestamp = Date.now();
+        let timestamp = getTimestamp();
+
 
         let bsShortCode = process.env.short_code;
+
         let passkey = process.env.passkey;
 
-        let password = Buffer.from(`${bsShortCode}${passkey}${timestamp}`).toString('base64');
+        let formattedPass = `${bsShortCode}${passkey}${timestamp}`
+
+        let password = Buffer.from(formattedPass).toString('base64');
         let type = "CustomerPayBillOnline";
-        let partyA = process.env.partyA;
+
+        let partyA = formatPhoneNumber(response, request.body.phone);
         let partyB = process.env.short_code;
 
-        let callBackUrl = "";
-        let accountReference = "Daraja API sandbox";
-        let transactionDesc = "Testing lipa na mpesa functionality";
+        let callBackUrl = "http://525971ceac11.ngrok.io/mpesa/hook";
+        let accountReference = "test";
+        let transactionDesc = "test";
+
+        let amount = validateAmount(response, parseInt(request.body.amount))
+
+
+        let data = {
+            BusinessShortCode: bsShortCode,
+            Password: password,
+            Timestamp: timestamp,
+            TransactionType: type,
+            Amount: amount,
+            PartyA: partyA,
+            PartyB: partyB,
+            PhoneNumber: partyA,
+            AccountReference: accountReference,
+            TransactionDesc: transactionDesc,
+            CallBackURL: callBackUrl
+        }
+
+        let config = {
+            headers: {
+                Authorization: auth,
+            }
+        }
 
         try {
-            let res = await axios.post(mpesaAuthUrl, {
-                BusinessShortCode: bsShortCode,
-                Password: password,
-                Timestamp: timestamp,
-                TransactionType: type,
-                Amount: request.body.amount,
-                PartyA: partyA,
-                partyB: partyB,
-                PhoneNumber: formatPhoneNumber(request.body.phone),
-                AccountReference: accountReference,
-                TransactionDesc: transactionDesc,
-                CallBackUrl: callBackUrl
-            }, {
-                headers: {
-                    Authorization: auth
-                }
-            }).catch(console.log)
-
-            return response.send({
-                success: true,
-                message: res ? res.data : null
-            });
+            await axios.post(darajaSandBoxUrl, data, config).then(res => {
+                return response.send({
+                    success: true,
+                    message: res.data
+                });
+            }).catch(e => {
+                return response.send({
+                    success: false,
+                    message: e['response']['statusText']
+                });
+            })
 
         } catch (e) {
             return response.send({
@@ -77,7 +97,6 @@ export class PaymentController {
         }
 
 
-        return response.json(request.body)
     }
 
     async requestPayment(request: Request, response: Response, next: NextFunction) {
@@ -124,7 +143,7 @@ export class MessageController {
     }
 }
 
-export class Controller {
+export class PaymentController {
 
     private userRepository = getRepository(User);
 
@@ -148,7 +167,38 @@ export class Controller {
 }
 
 
-const formatPhoneNumber = (phoneNumber: string) => {
-    console.log(phoneNumber)
-    return phoneNumber;
+const formatPhoneNumber = (response, phoneNumber: string) => {
+    let formatted = parseInt(`254${phoneNumber.substring(1)}`)
+    if (numberIsValid(formatted)) return formatted;
+    return response.status(400).json({status: "invalid_phone_number", desc: "Bad Request"})
+}
+
+
+const numberIsValid = (formatted) => {
+    let _pattern = /^(?:254|\+254|0)?(7(?:(?:[129][0-9])|(?:0[0-8])|(4[0-1]))[0-9]{6})$/;
+    return _pattern.test(formatted);
+}
+
+const validateAmount = (response, amount) => {
+    if (isNaN(amount) || amount < 1) {
+        response.status(400)
+            .json({"status": "invalid_amount", description: "Bad Request"});
+    }
+    return amount;
+}
+
+const getTimestamp = () => {
+
+    let date = new Date()
+
+    function pad2(n) {
+        return (n < 10 ? '0' : '') + n;
+    }
+
+    return date.getFullYear() +
+        pad2(date.getMonth() + 1) +
+        pad2(date.getDate()) +
+        pad2(date.getHours()) +
+        pad2(date.getMinutes()) +
+        pad2(date.getSeconds());
 }

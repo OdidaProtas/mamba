@@ -1,4 +1,4 @@
-import {Controller, GeneralController, MessageController, PaymentController} from "./controller/Controller";
+import {PaymentController, GeneralController, MessageController, PaymentController} from "./controller/PaymentController";
 
 
 export const Routes = [{
@@ -9,22 +9,22 @@ export const Routes = [{
 }, {
     method: "get",
     route: "/users",
-    controller: Controller,
+    controller: PaymentController,
     action: "all"
 }, {
     method: "get",
     route: "/users/:id",
-    controller: Controller,
+    controller: PaymentController,
     action: "one"
 }, {
     method: "post",
     route: "/users",
-    controller: Controller,
+    controller: PaymentController,
     action: "save"
 }, {
     method: "delete",
     route: "/users/:id",
-    controller: Controller,
+    controller: PaymentController,
     action: "remove"
 }, {
     method: "post",

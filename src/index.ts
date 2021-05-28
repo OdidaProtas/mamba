@@ -33,6 +33,6 @@ createConnection().then(async connection => {
 
     app.listen(process.env.PORT);
 
-    console.log("Express server has started");
+    console.log(`Express server has started on port ${process.env.PORT}`);
 
 }).catch(error => console.log(error));
