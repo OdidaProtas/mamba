@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start:dev": "nodemon",
-    "start": "node build/index.js",
+    "start": "node ./build/index.js",
     "makemigrations": "ts-node ./node_modules/typeorm/cli.js migration:generate -n Test",
     "migrate": "ts-node ./node_modules/typeorm/cli.js migration:run"
   },
