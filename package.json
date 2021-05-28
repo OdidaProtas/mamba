@@ -22,9 +22,11 @@
   },
   "scripts": {
     "start:dev": "nodemon",
-    "start": "ts-node src/index.ts",
+    "postinstall": "tsc",
+    "start": "node dist/index.js",
     "makemigrations": "ts-node ./node_modules/typeorm/cli.js migration:generate -n Test",
-    "migrate": "ts-node ./node_modules/typeorm/cli.js migration:run"
+    "migrate": "ts-node ./node_modules/typeorm/cli.js migration:run",
+    "deploy": "git add . && git commit -m Heroku && git push heroku master"
   },
   "engines": {
     "node": "12.x"
