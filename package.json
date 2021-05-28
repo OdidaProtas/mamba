@@ -23,7 +23,7 @@
   "scripts": {
     "start:dev": "nodemon",
     "postinstall": "tsc",
-    "start": "node dist/index.js",
+    "start": "node build/index.js",
     "makemigrations": "ts-node ./node_modules/typeorm/cli.js migration:generate -n Test",
     "migrate": "ts-node ./node_modules/typeorm/cli.js migration:run"
   },
