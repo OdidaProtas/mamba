@@ -26,7 +26,7 @@
     "start": "node dist/index.js",
     "makemigrations": "ts-node ./node_modules/typeorm/cli.js migration:generate -n Test",
     "migrate": "ts-node ./node_modules/typeorm/cli.js migration:run",
-    "deploy": "git add . && git commit -m Heroku && git push heroku master"
+    "deploy": "git add . && git commit -m Heroku && git push heroku main"
   },
   "engines": {
     "node": "12.x"
