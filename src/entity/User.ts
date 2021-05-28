@@ -36,4 +36,22 @@ export class User {
     })
     dateJoined: string;
 
+    @Column()
+    emailAddress: string;
+
+    @Column()
+    phoneNumber: string;
+
+    @Column()
+    password: string;
+
+
+    async encryptPassword() {
+        this.password = "";
+    }
+
+    async decryptPassword(password) {
+        return this.password != password;
+    }
+
 }

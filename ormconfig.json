@@ -1,20 +1,20 @@
 {
    "type": "postgres",
-   "host": "batyr.db.elephantsql.com",
+   "host": "localhost",
    "port": 5432,
-   "username": "ggqlweum",
-   "password": "TUzGfL7MTQoDXehjIUqZXtTrIGLfg0nK",
-   "database": "ggqlweum",
+   "username": "postgres",
+   "password": "",
+   "database": "munchkin",
    "synchronize": false,
    "logging": false,
    "entities": [
-      "src/entity/**/*.js"
+      "src/entity/**/*.ts"
    ],
    "migrations": [
-      "src/migration/**/*.js"
+      "src/migration/**/*.ts"
    ],
    "subscribers": [
-      "src/subscriber/**/*.js"
+      "src/subscriber/**/*.ts"
    ],
    "cli": {
       "entitiesDir": "src/entity",
