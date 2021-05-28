@@ -1,4 +1,4 @@
-import {PaymentController, GeneralController, MessageController, PaymentController} from "./controller/PaymentController";
+import {GeneralController, MessageController, PaymentController} from "./controller/PaymentController";
 
 
 export const Routes = [{
@@ -6,26 +6,6 @@ export const Routes = [{
     route: "/",
     controller: GeneralController,
     action: "one"
-}, {
-    method: "get",
-    route: "/users",
-    controller: PaymentController,
-    action: "all"
-}, {
-    method: "get",
-    route: "/users/:id",
-    controller: PaymentController,
-    action: "one"
-}, {
-    method: "post",
-    route: "/users",
-    controller: PaymentController,
-    action: "save"
-}, {
-    method: "delete",
-    route: "/users/:id",
-    controller: PaymentController,
-    action: "remove"
 }, {
     method: "post",
     route: "/message",
@@ -41,7 +21,7 @@ export const Routes = [{
     route: "/mpesa/hook",
     controller: PaymentController,
     action: "save"
-},{
+}, {
     method: "post",
     route: "/mpesa/request",
     controller: PaymentController,

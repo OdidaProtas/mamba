@@ -22,10 +22,9 @@
   },
   "scripts": {
     "start:dev": "nodemon",
-    "postinstall": "tsc",
-    "start": "node dist/index.js",
+    "start": "ts-node src/index.ts",
     "makemigrations": "ts-node ./node_modules/typeorm/cli.js migration:generate -n Test",
-    "migrate": "ts-node ./node_modules/typeorm/cli.js migration:run",
+    "migrate": "ts-node ./node_modules/typeorm/cli.js migration:run"
   },
   "engines": {
     "node": "12.x"
