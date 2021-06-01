@@ -51,7 +51,7 @@ export class User {
     carts: Cart[];
 
     async encryptPassword() {
-        this.password = "";
+        this.password = "this";
     }
 
     async decryptPassword(password) {
