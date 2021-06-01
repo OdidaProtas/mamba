@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinTable} from "typeorm";
+import {Cart} from "./Cart";
 
 export enum UserRole {
     SUPER_ADMIN = "super_admin",
@@ -40,11 +41,14 @@ export class User {
     emailAddress: string;
 
     @Column()
-    phoneNumber: string;
+    phoneNumber: number;
 
     @Column()
     password: string;
 
+    @OneToMany(type => Cart, cart => cart.customer)
+    @JoinTable()
+    carts: Cart[];
 
     async encryptPassword() {
         this.password = "";

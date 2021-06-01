@@ -1,34 +1,19 @@
-import {getRepository} from "typeorm";
 import {NextFunction, Request, Response} from "express";
-import {User} from "../entity/User";
-import {Message} from "../entity/Message";
-import * as prettyjson from "prettyjson";
 import axios from "axios";
 
-const mpesaAuthUrl = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
-const darajaSandBoxUrl = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
-
-export class GeneralController {
-    async one(request: Request, response: Response, next: NextFunction) {
-        return "Dreamer"
-    }
-}
-
-const options = {
-    noColor: false
-}
+const mpesaAuthUrl = process.env.mpesa_url;
+const darajaSandBoxUrl = process.env.stk_push_url;
 
 export class PaymentController {
 
     async save(request: Request, response: Response, next: NextFunction) {
+
         let message = {
             "ResponseCode": "00000000",
             "ResponseDesc": "success"
         }
 
-        console.log(prettyjson.render(request.body, options));
-
-        response.json(message)
+        response.json(message);
     }
 
     async stkPush(request, response) {
@@ -41,7 +26,7 @@ export class PaymentController {
 
         let passkey = process.env.passkey;
 
-        let formattedPass = `${bsShortCode}${passkey}${timestamp}`
+        let formattedPass = `${bsShortCode}${passkey}${timestamp}`;
 
         let password = Buffer.from(formattedPass).toString('base64');
         let type = "CustomerPayBillOnline";
@@ -53,7 +38,7 @@ export class PaymentController {
         let accountReference = "test";
         let transactionDesc = "test";
 
-        let amount = validateAmount(response, parseInt(request.body.amount))
+        let amount = validateAmount(response, parseInt(request.body.amount));
 
 
         let data = {
@@ -129,25 +114,10 @@ export class PaymentController {
     }
 }
 
-
-export class MessageController {
-
-    private messageRepository = getRepository(Message)
-
-    async save(request: Request, response: Response, next: NextFunction) {
-        return this.messageRepository.save(request.body)
-    }
-
-    async all(request: Request, response: Response, next: NextFunction) {
-        return this.messageRepository.find();
-    }
-}
-
-
 const formatPhoneNumber = (response, phoneNumber: string) => {
-    let formatted = parseInt(`254${phoneNumber.substring(1)}`)
+    let formatted = parseInt(`254${phoneNumber.substring(1)}`);
     if (numberIsValid(formatted)) return formatted;
-    return response.status(400).json({status: "invalid_phone_number", desc: "Bad Request"})
+    return response.status(400).json({status: "invalid_phone_number", desc: "Bad Request"});
 }
 
 
@@ -158,15 +128,14 @@ const numberIsValid = (formatted) => {
 
 const validateAmount = (response, amount) => {
     if (isNaN(amount) || amount < 1) {
-        response.status(400)
-            .json({"status": "invalid_amount", description: "Bad Request"});
+        response.status(400).json({status: "invalid_amount", description: "Bad Request"});
     }
     return amount;
 }
 
 const getTimestamp = () => {
 
-    let date = new Date()
+    let date = new Date();
 
     function pad2(n) {
         return (n < 10 ? '0' : '') + n;

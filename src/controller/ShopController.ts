@@ -1,29 +1,29 @@
 import {getRepository} from "typeorm";
-import {User} from "../entity/User";
 import {Request, Response, NextFunction} from "express";
+import {Shop} from "../entity/Shop";
 
-export class UserController {
+export class ShopController {
 
-    userRepository = getRepository(User)
+    shopRepository = getRepository(Shop)
 
     async save(request: Request, response: Response, next: NextFunction) {
-        return this.userRepository.save(request.body);
+        return this.shopRepository.save(request.body);
     }
 
     async all(request: Request, response: Response, next: NextFunction) {
-        return this.userRepository.find();
+        return this.shopRepository.find();
     }
 
     async one(request: Request, response: Response, next: NextFunction) {
-        return this.userRepository.findByIds([request.params.id])
+        return this.shopRepository.findByIds([request.params.id])
     }
 
     async update(request: Request, response: Response, next: NextFunction) {
-        return this.userRepository.update(request.params.id, request.body)
+        return this.shopRepository.update(request.params.id, request.body)
     }
 
     async delete(request: Request, response: Response, next: NextFunction) {
-        return this.userRepository.softDelete(request.params.id)
+        return this.shopRepository.softDelete(request.params.id)
     }
 
 }

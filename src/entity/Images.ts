@@ -1,13 +1,14 @@
 import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity()
-export default class MpesaExpress {
+export class Images {
+
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
-    phone: number;
+    productName: string;
 
     @Column()
-    amount: number;
+    imageUrl: string;
 }
