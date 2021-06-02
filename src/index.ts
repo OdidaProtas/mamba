@@ -20,10 +20,14 @@ createConnection().then(async connection => {
 
     app.use(cors(options))
 
+    const pass = new AuthController().pass;
+    const intercept = new AuthController().frisk;
+
     Routes.forEach(route => {
         (app as any)[route.method](route.route,
 
-            route.route === "/login" ? new AuthController().pass : new AuthController().frisk,
+            route.route === "/login" ? pass : route.route === "/" ? pass : intercept,
+
             (req: Request, res: Response, next: Function) => {
 
                 const result = (new (route.controller as any))[route.action](req, res, next);
