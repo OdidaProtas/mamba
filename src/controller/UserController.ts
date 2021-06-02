@@ -6,10 +6,6 @@ export class UserController {
 
     userRepository = getRepository(User)
 
-    async save(request: Request, response: Response, next: NextFunction) {
-        return this.userRepository.save(request.body);
-    }
-
     async all(request: Request, response: Response, next: NextFunction) {
         return this.userRepository.find();
     }

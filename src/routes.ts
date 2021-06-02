@@ -7,11 +7,13 @@ import {riderRoutes} from "./routes/RiderRoutes";
 import {cartItemRoutes} from "./routes/CartItemRoutes";
 
 import {Request, Response, NextFunction} from "express";
+import {authRoutes} from "./routes/AuthRoutes";
 
-class Index {
+export class Index {
     async index(request: Request, response: Response, next: NextFunction) {
         return "<h1>Art<span style='color: #ff0000'>i</span>k<h1/>";
     }
+
 }
 
 const homeRoute = {
@@ -30,4 +32,6 @@ export const Routes = [
     ...shopRoutes,
     ...riderRoutes,
     ...cartItemRoutes,
+    ...authRoutes,
 ];
+

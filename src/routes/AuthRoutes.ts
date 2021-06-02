@@ -9,8 +9,8 @@ export const authRoutes = [
     },
     {
         method: "post",
-        route: "/refresh-token",
+        route: "/signup",
         controller: AuthController,
-        action: "refresh"
+        action: "signup"
     }
 ]

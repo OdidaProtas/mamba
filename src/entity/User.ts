@@ -40,7 +40,9 @@ export class User {
     @Column()
     emailAddress: string;
 
-    @Column()
+    @Column({
+        unique: true
+    })
     phoneNumber: number;
 
     @Column()
@@ -49,13 +51,5 @@ export class User {
     @OneToMany(type => Cart, cart => cart.customer)
     @JoinTable()
     carts: Cart[];
-
-    async encryptPassword() {
-        this.password = "this";
-    }
-
-    async decryptPassword(password) {
-        return this.password != password;
-    }
 
 }
