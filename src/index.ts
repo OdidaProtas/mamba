@@ -26,7 +26,7 @@ createConnection().then(async connection => {
     Routes.forEach(route => {
         (app as any)[route.method](route.route,
 
-            route.route === "/login" ? pass : route.route === "/" ? pass : intercept,
+            route.route === "/login" ? pass : route.route === "/" ? pass : route.route === "/signup" ? pass : intercept,
 
             (req: Request, res: Response, next: Function) => {
 
