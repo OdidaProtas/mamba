@@ -3,6 +3,7 @@ import {createConnection} from "typeorm";
 import * as express from "express";
 import * as cors from "cors";
 import * as bodyParser from "body-parser";
+import * as path from "path";
 import {Request, Response} from "express";
 import {Routes} from "./routes";
 import {AuthController} from "./controller/AuthController";
@@ -19,6 +20,9 @@ createConnection().then(async connection => {
     }
 
     app.use(cors())
+
+    app.set('view engine', 'pug')
+    app.set('views', path.join(__dirname, "static"))
 
     const pass = new AuthController().pass;
     const intercept = new AuthController().frisk;

@@ -11,7 +11,7 @@ import {authRoutes} from "./routes/AuthRoutes";
 
 export class Index {
     async index(request: Request, response: Response, next: NextFunction) {
-        return "<h1>Art<span style='color: #ff0000'>i</span>k<h1/>";
+        return response.render("index");
     }
 
 }

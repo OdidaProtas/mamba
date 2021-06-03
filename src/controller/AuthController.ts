@@ -9,9 +9,13 @@ export class AuthController {
     userRepository = getRepository(User);
 
     async login(request: Request, response: Response, next: NextFunction) {
-        const user = await this.userRepository.findOneOrFail({phoneNumber: request.body.phoneNumber});
-        if (bcrypt.compareSync(request.body.password, user.password)) return generateToken(user, response);
-        return response.json({status: "failure", desc: "Invalid username or password"})
+        try{
+            const user = await this.userRepository.findOneOrFail({phoneNumber: request.body.phoneNumber});
+            if (bcrypt.compareSync(request.body.password, user.password)) return generateToken(user, response);
+            return response.json({status: "failure", desc: "Invalid username or password"})
+        }catch (e) {
+            response.sendStatus(404);
+        }
     }
 
 
