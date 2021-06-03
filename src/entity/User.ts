@@ -21,9 +21,6 @@ export class User {
     @Column()
     lastName: string;
 
-    @Column()
-    age: number;
-
     @Column({
         type: "enum",
         enum: UserRole,

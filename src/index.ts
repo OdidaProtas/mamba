@@ -18,7 +18,7 @@ createConnection().then(async connection => {
         origin: allowedOrigins
     }
 
-    app.use(cors(options))
+    app.use(cors())
 
     const pass = new AuthController().pass;
     const intercept = new AuthController().frisk;
