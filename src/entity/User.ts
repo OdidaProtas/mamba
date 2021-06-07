@@ -1,5 +1,6 @@
 import {Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinTable} from "typeorm";
 import {Cart} from "./Cart";
+import {Shop} from "./Shop";
 
 export enum UserRole {
     SUPER_ADMIN = "super_admin",
@@ -48,5 +49,9 @@ export class User {
     @OneToMany(type => Cart, cart => cart.customer)
     @JoinTable()
     carts: Cart[];
+
+    @OneToMany(type => Shop, shop => shop.user)
+    @JoinTable()
+    shops: Shop[]
 
 }

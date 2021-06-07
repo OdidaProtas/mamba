@@ -1,6 +1,6 @@
 import {Column, Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
-import {Merchant} from "./Merchant";
 import {Product} from "./Product";
+import {User} from "./User";
 
 export enum BusinessCategory {
     BEAUTY_AND_FASHION = "beauty_and_fashion",
@@ -63,8 +63,8 @@ export class Shop {
     })
     longitude: string
 
-    @ManyToOne(type => Merchant, merchant => merchant.shop)
-    merchant: Merchant;
+    @ManyToOne(type => User, user => user.shops)
+    user: User;
 
     @OneToMany(type => Product, product => product.shop)
     @JoinTable()

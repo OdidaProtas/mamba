@@ -1,5 +1,4 @@
-import {Entity, JoinTable, OneToMany, PrimaryGeneratedColumn} from "typeorm";
-import {Shop} from "./Shop";
+import {Entity, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity()
 export class Merchant {
@@ -7,7 +6,4 @@ export class Merchant {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @OneToMany(type => Shop, shop => shop.merchant)
-    @JoinTable()
-    shop: Shop[];
 }
