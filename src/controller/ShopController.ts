@@ -7,7 +7,8 @@ export class ShopController {
     shopRepository = getRepository(Shop)
 
     async save(request: Request, response: Response, next: NextFunction) {
-        request.body["user"] = request.user
+        let user = request.user
+        request.body["user"] = user;
         return this.shopRepository.save(request.body);
     }
 

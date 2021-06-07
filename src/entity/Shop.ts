@@ -16,7 +16,7 @@ export class Shop {
     id: number;
 
     @Column()
-    mame: string;
+    name: string;
 
     @Column({
         nullable: true,
