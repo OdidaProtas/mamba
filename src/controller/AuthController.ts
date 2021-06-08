@@ -29,7 +29,6 @@ export class AuthController {
         console.log(accessToken)
         if (accessToken == null || accessToken == undefined) return response.sendStatus(400);
         return jwt.verify(accessToken, process.env.jwt_secret as string, async (err: any, user: any) => {
-            console.log()
             if (err) return response.sendStatus(403);
             request.user = await new AuthController().userRepository.findOneOrFail({phoneNumber: user});
             next();
@@ -43,13 +42,13 @@ export class AuthController {
 }
 
 const generateToken = async (user: User, response: Response) => {
-    let _token = await jwt.sign(user.phoneNumber.toString(), process.env.jwt_secret);
     const msg = {
         id: user.id,
+        phoneNumber: user.phoneNumber,
         firstName: user.firstName,
         lastName: user.lastName,
-        token: _token,
         email: user.emailAddress
     }
-    return response.send(msg);
+    let _token = await jwt.sign(JSON.stringify(msg), process.env.jwt_secret);
+    return response.send(_token);
 }
