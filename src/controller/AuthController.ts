@@ -10,7 +10,7 @@ export class AuthController {
 
     async login(request: Request, response: Response, next: NextFunction) {
         try {
-            const user = await this.userRepository.findOneOrFail({phoneNumber: request.body.phoneNumber});
+            const user = await this.userRepository.findOneOrFail({phoneNumber: request.body.phoneNumber}, {relations: ["shops"]});
             if (bcrypt.compareSync(request.body.password, user.password)) return generateToken(user, response);
             return response.sendStatus(403);
         } catch (e) {

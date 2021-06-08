@@ -15,7 +15,9 @@ export class Shop {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({
+        unique: true,
+    })
     name: string;
 
     @Column({
@@ -23,7 +25,9 @@ export class Shop {
     })
     tagLine: string;
 
-    @Column()
+    @Column({
+        unique: true
+    })
     businessPhoneNumber: string;
 
     @Column({
