@@ -47,7 +47,8 @@ const generateToken = async (user: User, response: Response) => {
         phoneNumber: user.phoneNumber,
         firstName: user.firstName,
         lastName: user.lastName,
-        email: user.emailAddress
+        email: user.emailAddress,
+        shops: user.shops.length,
     }
     let _token = await jwt.sign(JSON.stringify(msg), process.env.jwt_secret);
     return response.send(_token);
