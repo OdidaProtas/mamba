@@ -26,11 +26,10 @@ export class AuthController {
 
     async frisk(request: Request, response: Response, next: NextFunction) {
         const accessToken = request.headers["access_token"];
-        console.log(accessToken)
         if (accessToken == null || accessToken == undefined) return response.sendStatus(400);
         return jwt.verify(accessToken, process.env.jwt_secret as string, async (err: any, user: any) => {
             if (err) return response.sendStatus(403);
-            request.user = await new AuthController().userRepository.findOneOrFail({phoneNumber: user});
+            request.user = await new AuthController().userRepository.findOneOrFail({phoneNumber: user.phoneNumber});
             next();
         });
     }
