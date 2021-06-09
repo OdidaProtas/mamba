@@ -32,7 +32,7 @@ export class ShopController {
     }
 
     async delete(request: Request, response: Response, next: NextFunction) {
-        return this.shopRepository.softDelete(request.params.id);
+        return this.shopRepository.delete(request.params.id);
     }
 
 }
