@@ -1,4 +1,5 @@
 import {ShopController} from "../controller/ShopController";
+import {get} from "http";
 
 export const shopRoutes = [
     {
@@ -18,6 +19,12 @@ export const shopRoutes = [
         route: "/shops/:id",
         controller: ShopController,
         action: "one"
+    },
+    {
+        method: "get",
+        route: "/user/:id/shops",
+        controller: ShopController,
+        action: "byUser"
     },
     {
         method: "patch",

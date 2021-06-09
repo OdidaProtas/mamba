@@ -1,6 +1,7 @@
 import {getRepository} from "typeorm";
 import {Request, Response, NextFunction} from "express";
 import {Shop} from "../entity/Shop";
+import {UserController} from "./UserController";
 
 export class ShopController {
 
@@ -20,12 +21,17 @@ export class ShopController {
         return this.shopRepository.findByIds([request.params.id])
     }
 
+    async byUser(request:Request, response: Response, next: NextFunction){
+        let user = await new UserController().userRepository.findOne(request.params.id);
+        return this.shopRepository.find({user: user});
+    }
+
     async update(request: Request, response: Response, next: NextFunction) {
-        return this.shopRepository.update(request.params.id, request.body)
+        return this.shopRepository.update(request.params.id, request.body);
     }
 
     async delete(request: Request, response: Response, next: NextFunction) {
-        return this.shopRepository.softDelete(request.params.id)
+        return this.shopRepository.softDelete(request.params.id);
     }
 
 }
