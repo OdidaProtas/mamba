@@ -52,6 +52,6 @@ export class User {
 
     @OneToOne(type => Shop, shop => shop.user)
     @JoinColumn()
-    shops: Shop[]
+    shops: Shop
 
 }
