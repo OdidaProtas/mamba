@@ -1,4 +1,4 @@
-import {Column, Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinTable, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import {Product} from "./Product";
 import {User} from "./User";
 
@@ -67,7 +67,7 @@ export class Shop {
     })
     longitude: string
 
-    @ManyToOne(type => User, user => user.shops)
+    @OneToOne(type => User, user => user.shops)
     user: User;
 
     @OneToMany(type => Product, product => product.shop)

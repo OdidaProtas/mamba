@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinTable} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinTable, OneToOne, JoinColumn} from "typeorm";
 import {Cart} from "./Cart";
 import {Shop} from "./Shop";
 
@@ -50,8 +50,8 @@ export class User {
     @JoinTable()
     carts: Cart[];
 
-    @OneToMany(type => Shop, shop => shop.user)
-    @JoinTable()
+    @OneToOne(type => Shop, shop => shop.user)
+    @JoinColumn()
     shops: Shop[]
 
 }
