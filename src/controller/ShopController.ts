@@ -1,12 +1,12 @@
 import {getRepository} from "typeorm";
 import {Request, Response, NextFunction} from "express";
 import {Shop} from "../entity/Shop";
-import {UserController} from "./UserController";
-import {AuthController} from "./AuthController";
+import {User} from "../entity/User";
 
 export class ShopController {
 
     shopRepository = getRepository(Shop)
+    userRepository = getRepository(User)
 
     async save(request: Request, response: Response, next: NextFunction) {
         let user = request.user
@@ -23,7 +23,7 @@ export class ShopController {
     }
 
     async byUser(request: Request, response: Response, next: NextFunction) {
-        let user = await new AuthController().userRepository.findOne(request.params.id);
+        let user = await this.userRepository.findOne(request.params.id);
         return await this.shopRepository.find({user: user});
     }
 

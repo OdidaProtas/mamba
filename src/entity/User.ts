@@ -51,7 +51,6 @@ export class User {
     carts: Cart[];
 
     @OneToOne(type => Shop, shop => shop.user)
-    @JoinTable()
     shops: Shop
 
 }
