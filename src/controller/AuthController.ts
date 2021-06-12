@@ -49,6 +49,7 @@ const generateToken = async (user: User, response: Response) => {
         email: user.emailAddress,
         shops: user.shops
     }
-    let _token = await jwt.sign(JSON.stringify(msg), process.env.jwt_secret);
+    console.log(user.shops)
+    let _token = jwt.sign(JSON.stringify(msg), process.env.jwt_secret);
     return response.send(_token);
 }
