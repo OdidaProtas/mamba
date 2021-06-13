@@ -17,18 +17,18 @@ export class Product {
         nullable: true,
         default: 0
     })
-    purchasePrice: number;
+    purchasePrice: string;
 
 
     @Column({
         nullable: true
     })
-    retailPrice: number;
+    retailPrice: string;
 
     @Column({
         default: 0
     })
-    quantity: number;
+    quantity: string;
 
 
     @Column({
@@ -39,7 +39,7 @@ export class Product {
     @Column({
         nullable: true,
     })
-    barcode: number;
+    barcode: string;
 
     @Column({
         nullable: true
