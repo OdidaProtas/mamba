@@ -14,7 +14,8 @@ export class Product {
 
 
     @Column({
-        nullable: true
+        nullable: true,
+        default: 0
     })
     purchasePrice: number;
 
@@ -25,7 +26,7 @@ export class Product {
     retailPrice: number;
 
     @Column({
-        nullable: true
+        default: 0
     })
     quantity: number;
 

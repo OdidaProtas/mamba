@@ -3,19 +3,19 @@ import {ProductsController} from "../controller/ProductsController";
 export const productRoutes = [
     {
         method: "post",
-        route: "products/save",
+        route: "/products/save",
         controller: ProductsController,
         action: "save"
     },
     {
         method: "get",
-        route: "products/:id",
+        route: "/products/:id",
         controller: ProductsController,
         action: "one"
     },
     {
         method: "get",
-        route: "products/all",
+        route: "/products/all",
         controller: ProductsController,
         action: "all"
     },
