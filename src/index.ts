@@ -7,7 +7,6 @@ import * as path from "path";
 import {Request, Response} from "express";
 import {Routes} from "./routes";
 import {AuthController} from "./controller/AuthController";
-import fileUpload from "express-fileupload";
 
 createConnection().then(async connection => {
 
@@ -20,7 +19,6 @@ createConnection().then(async connection => {
     }
 
     app.use(cors());
-    app.use(fileUpload());
 
     app.set('view engine', 'pug')
     app.set('views', path.join(__dirname, "static"))
