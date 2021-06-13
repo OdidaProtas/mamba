@@ -1,16 +1,17 @@
 import {getRepository} from "typeorm";
 import {Product} from "../entity/Product";
 import {NextFunction, Request, Response} from "express";
+import {Shop} from "../entity/Shop";
 
 export class ProductsController {
 
     productsRepository = getRepository(Product);
+    shopRepository = getRepository(Shop);
 
     async save(request: Request, response: Response, next: NextFunction) {
         try {
             return this.productsRepository.save(request.body);
         } catch (e) {
-            console.log(e);
             return response.status(400);
         }
     }
@@ -29,6 +30,10 @@ export class ProductsController {
 
     async remove(request: Request, response: Response, next: NextFunction) {
         return this.productsRepository.softDelete(request.params.id)
+    }
+
+    async byShop(request: Request, response: Response, next: NextFunction) {
+        return this.productsRepository.find({shop: request.params.id})
     }
 
 }
