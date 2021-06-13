@@ -7,7 +7,12 @@ export class ProductsController {
     productsRepository = getRepository(Product);
 
     async save(request: Request, response: Response, next: NextFunction) {
-        return this.productsRepository.save(request.body);
+        try {
+            return this.productsRepository.save(request.body);
+        } catch (e) {
+            console.log(e);
+            return response.status(400);
+        }
     }
 
     async all(request: Request, response: Response, next: NextFunction) {
