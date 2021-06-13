@@ -31,7 +31,7 @@ export class Product {
 
 
     @Column({
-        nullable: true
+        type: "date"
     })
     expiryDate: string;
 
@@ -56,6 +56,5 @@ export class Product {
     @OneToMany(type => Variants, variant => variant.product)
     @JoinTable()
     variants: Variants[];
-
 
 }

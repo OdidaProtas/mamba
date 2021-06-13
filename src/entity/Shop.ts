@@ -67,6 +67,11 @@ export class Shop {
     })
     longitude: string
 
+    @Column({
+        default: false
+    })
+    hasDelivery: boolean;
+
     @OneToOne(type => User, user => user.shops)
     @JoinColumn()
     user: User;

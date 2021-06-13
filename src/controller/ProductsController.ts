@@ -26,5 +26,5 @@ export class ProductsController {
         return this.productsRepository.softDelete(request.params.id)
     }
 
-
 }
+

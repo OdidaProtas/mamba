@@ -24,7 +24,7 @@ export class ShopController {
 
     async byUser(request: Request, response: Response, next: NextFunction) {
         let user = await this.userRepository.findOne(request.params.id);
-        return await this.shopRepository.find({user: user});
+        return  await this.shopRepository.find({user: user});
     }
 
     async update(request: Request, response: Response, next: NextFunction) {
