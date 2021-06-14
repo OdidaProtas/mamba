@@ -2,11 +2,13 @@ import {getRepository} from "typeorm";
 import {Product} from "../entity/Product";
 import {NextFunction, Request, Response} from "express";
 import {Shop} from "../entity/Shop";
+import {User} from "../entity/User";
 
 export class ProductsController {
 
     productsRepository = getRepository(Product);
     shopRepository = getRepository(Shop);
+    userRepository = getRepository(User);
 
     async save(request: Request, response: Response, next: NextFunction) {
         try {
@@ -33,7 +35,8 @@ export class ProductsController {
     }
 
     async productsByShop(request: Request, response: Response, next: NextFunction) {
-        return this.productsRepository.find({shop: request.params.id})
+        const shop = await this.shopRepository.findOne({user: request.params.id});
+        return this.productsRepository.find({shop: shop});
     }
 
 }
