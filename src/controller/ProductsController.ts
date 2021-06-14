@@ -32,7 +32,7 @@ export class ProductsController {
         return this.productsRepository.softDelete(request.params.id)
     }
 
-    async byShop(request: Request, response: Response, next: NextFunction) {
+    async productsByShop(request: Request, response: Response, next: NextFunction) {
         return this.productsRepository.find({shop: request.params.id})
     }
 

@@ -1,5 +1,6 @@
 import {ShopController} from "../controller/ShopController";
 import {get} from "http";
+import {ProductsController} from "../controller/ProductsController";
 
 export const shopRoutes = [
     {
@@ -38,5 +39,11 @@ export const shopRoutes = [
         controller: ShopController,
         action: "delete"
     },
+    {
+        method: "get",
+        route: "/shops/:id/products",
+        controller: ProductsController,
+        action: "productsByShop"
+    }
 
 ]

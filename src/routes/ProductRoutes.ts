@@ -30,11 +30,5 @@ export const productRoutes = [
         route: "products/:id/update",
         controller: ProductsController,
         action: "update"
-    },
-    {
-        method: "get",
-        route: "shop/:id/products",
-        controller: ProductsController,
-        action: "byShop"
     }
 ]
