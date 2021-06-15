@@ -11,7 +11,7 @@ import {authRoutes} from "./routes/AuthRoutes";
 
 export class Index {
     async index(request: Request, response: Response, next: NextFunction) {
-        return response.render("index");
+        return "Artik Api";
     }
 
 }
