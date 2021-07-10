@@ -1,51 +1,35 @@
 import "reflect-metadata";
-import {createConnection} from "typeorm";
 import * as express from "express";
 import * as cors from "cors";
 import * as bodyParser from "body-parser";
-import * as path from "path";
-import {Request, Response} from "express";
-import {Routes} from "./routes";
-import {AuthController} from "./controller/AuthController";
+import { Request, Response } from "express";
+import { Routes } from "./routes";
 
-createConnection().then(async connection => {
 
-    const app = express();
-    app.use(bodyParser.json());
+const app = express();
+app.use(bodyParser.json());
 
-    const allowedOrigins = ['http://localhost:3000'];
-    const options: cors.CorsOptions = {
-        origin: allowedOrigins
-    }
+const allowedOrigins = ['http://localhost:3000'];
 
-    app.use(cors());
+app.use(cors());
 
-    app.set('view engine', 'pug')
-    app.set('views', path.join(__dirname, "static"))
 
-    const pass = new AuthController().pass;
-    const intercept = new AuthController().frisk;
+Routes.forEach(route => {
+    (app as any)[route.method](route.route,
+        (req: Request, res: Response, next: Function) => {
 
-    Routes.forEach(route => {
-        (app as any)[route.method](route.route,
+            const result = (new (route.controller as any))[route.action](req, res, next);
 
-            route.route === "/login" ? pass : route.route === "/" ? pass : route.route === "/signup" ? pass : intercept,
+            if (result instanceof Promise) {
+                result.then(result => result !== null && result !== undefined ? res.send(result) : undefined);
 
-            (req: Request, res: Response, next: Function) => {
+            } else if (result !== null && result !== undefined) {
+                res.json(result);
+            }
+        });
+});
 
-                const result = (new (route.controller as any))[route.action](req, res, next);
+app.listen(8000);
 
-                if (result instanceof Promise) {
-                    result.then(result => result !== null && result !== undefined ? res.send(result) : undefined);
+console.log(`Express server has started on port ${process.env.PORT}`);
 
-                } else if (result !== null && result !== undefined) {
-                    res.json(result);
-                }
-            });
-    });
-
-    app.listen(process.env.PORT);
-
-    console.log(`Express server has started on port ${process.env.PORT}`);
-
-}).catch(error => console.log(error));

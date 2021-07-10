@@ -6,7 +6,7 @@ const darajaSandBoxUrl = process.env.stk_push_url;
 
 export class PaymentController {
 
-    async save(request: Request, response: Response, next: NextFunction) {
+    async hook(request: Request, response: Response, next: NextFunction) {
 
         let message = {
             "ResponseCode": "00000000",

@@ -1,13 +1,5 @@
-import {paymentRoutes} from "./routes/PaymnetRoutes";
-import {productRoutes} from "./routes/ProductRoutes";
-import {cartRoutes} from "./routes/CartRoutes";
-import {userRoutes} from "./routes/UserRoutes";
-import {shopRoutes} from "./routes/ShopRoutes";
-import {riderRoutes} from "./routes/RiderRoutes";
-import {cartItemRoutes} from "./routes/CartItemRoutes";
-
 import {Request, Response, NextFunction} from "express";
-import {authRoutes} from "./routes/AuthRoutes";
+import { PaymentController } from "./controller/PaymentController";
 
 export class Index {
     async index(request: Request, response: Response, next: NextFunction) {
@@ -15,6 +7,22 @@ export class Index {
     }
 
 }
+
+const paymentRoutes = [
+    {
+        method: "post",
+        route: "/mpesa/request",
+        controller: PaymentController,
+        action: "requestPayment"
+    },
+    {
+        method: "post",
+        route: "/mpesa/hook",
+        controller: PaymentController,
+        action: "hook"
+    }
+
+]
 
 const homeRoute = {
     method: "get",
@@ -26,12 +34,5 @@ const homeRoute = {
 export const Routes = [
     homeRoute,
     ...paymentRoutes,
-    ...productRoutes,
-    ...cartRoutes,
-    ...userRoutes,
-    ...shopRoutes,
-    ...riderRoutes,
-    ...cartItemRoutes,
-    ...authRoutes,
 ];
 
