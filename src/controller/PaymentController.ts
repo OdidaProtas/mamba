@@ -55,6 +55,8 @@ export class PaymentController {
             CallBackURL: callBackUrl
         }
 
+        console.log(data);
+
         let config = {
             headers: {
                 Authorization: auth,
