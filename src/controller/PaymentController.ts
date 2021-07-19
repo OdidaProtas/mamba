@@ -4,17 +4,9 @@ import axios from "axios";
 const mpesaAuthUrl = process.env.mpesa_url;
 const darajaSandBoxUrl = process.env.stk_push_url;
 
+const users: any = {};
+
 export class PaymentController {
-
-    async hook(request: Request, response: Response, next: NextFunction) {
-
-        let message = {
-            "ResponseCode": "00000000",
-            "ResponseDesc": "success"
-        }
-
-        response.json(message);
-    }
 
     async stkPush(request, response) {
 
@@ -34,7 +26,7 @@ export class PaymentController {
         let partyA = formatPhoneNumber(response, request.body.phone);
         let partyB = process.env.short_code;
 
-        let callBackUrl = "http://525971ceac11.ngrok.io/mpesa/hook";
+        let callBackUrl = "https://1e1396fc9754.ngrok.io/mpesa/hook";
         let accountReference = "test";
         let transactionDesc = "test";
 
@@ -55,7 +47,6 @@ export class PaymentController {
             CallBackURL: callBackUrl
         }
 
-        console.log(data);
 
         let config = {
             headers: {
@@ -65,10 +56,12 @@ export class PaymentController {
 
         try {
             await axios.post(darajaSandBoxUrl, data, config).then(res => {
+                console.log(res.data.CheckoutRequestID);
                 return response.send({
                     success: true,
                     message: res.data
                 });
+
             }).catch(e => {
                 return response.send({
                     success: false,

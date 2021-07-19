@@ -14,12 +14,6 @@ const paymentRoutes = [
         route: "/mpesa/request",
         controller: PaymentController,
         action: "requestPayment"
-    },
-    {
-        method: "post",
-        route: "/mpesa/hook",
-        controller: PaymentController,
-        action: "hook"
     }
 
 ]
